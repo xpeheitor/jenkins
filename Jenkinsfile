@@ -1,9 +1,12 @@
 pipeline {
+    agent any
+
     stages {
-        withCredentials([string(credentialsId: 'sentry-env', variable: 'SENTRY_KEY')])
         stage('build') {
             steps {
-                sh 'echo ${SENTRY_KEY}'
+                withCredentials([string(credentialsId: 'sentry-env', variable: 'SENTRY_KEY')]) {
+                    sh 'echo ${SENTRY_KEY}'
+                }
             }
         }
     }
